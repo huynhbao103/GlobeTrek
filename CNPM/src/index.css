@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: Godwit, MuseoSans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    padding:0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+::selection{
+    background: #00875A;
+    color: beige;
+}
+
+.background-cover {
+    background-image: url('./assets/image.png');
+    background-size: cover;
+    
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  @layer utilities {
+  .gradient-background {
+    background: linear-gradient(
+      to bottom, 
+      rgba(47, 138, 84, 0.8) 6%, 
+      rgba(47, 138, 84, 1) 40%, 
+      rgba(1, 50, 55, 0.7) 100%
+    );
+  }
+}
+    .day-item.selected {
+        background-color: #4CA771;
+        color: white;
+        font-weight: bold;
+    } 
