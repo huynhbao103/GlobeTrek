@@ -6,8 +6,8 @@ import '../fontawesome'; // Đảm bảo bạn đã import file cấu hình Font
 
 function Location() {
   return (
-    <div className="container mx-auto my-4  ">
-      <div className=" flex items-center  p-4  ">
+    <div className="container mx-auto my-4 w-[70%] sm:max-w-[1280px] ">
+      <div className=" w-[68%] max-sm:flex-col flex items-center  p-4  ">
         <div className="flex items-center ">
         <FontAwesomeIcon icon="fa-solid fa-location-dot" />
           <div className=" p-2 text-black text-sm font-bold sm:text-base ">
@@ -28,7 +28,7 @@ function Location() {
 </div>
 
       </div>
-      <div className="bg-[#4CA771] rounded-full w-72 mt-4 p-2 font-bold justify-center text-white text-sm flex items-center">
+      <div className="bg-[#4CA771] sm:rounded-full rounded-lg  w-[80%] sm:w-[30%] mt-4 p-2 font-bold justify-center text-white text-sm flex items-center">
         <div className='px-2'>Xem các hoạt động ở vị trí của bạn </div>
         <FontAwesomeIcon icon="fa-solid fa-arrow-right" />
       </div>

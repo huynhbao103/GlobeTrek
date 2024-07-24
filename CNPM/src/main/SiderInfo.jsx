@@ -56,9 +56,9 @@ function ToursWordTravel() {
 
   return (
     <>
-      <div className='w-full flex justify-center pb-10'>
-        <div className='w-[83%]'>
-          <div className='w-full mx-auto pt-10'>
+      <div className='sm:max-w-[1280px] flex mx-auto items-center justify-center pb-10'>
+        <div className='w-full mx-auto'>
+          <div className='w-[80%] mx-auto pt-10'>
             <div className='relative'>
               <Slider ref={sliderRef} {...settings}>
                 {locations[0].tours.map((tour, index) => (

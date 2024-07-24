@@ -37,9 +37,9 @@ const App = () => {
 
   return (
     <>
-    <div className='bg-[rgba(174,249,231,0.2)] w-full h-full mt-56'>
+    <div className='bg-[rgba(174,249,231,0.2)] mt-40'>
     <Header/>
-    <div className='  w-[80%] m-auto justify-center items-center'>
+    <div className=' max-w-[1280px]  w-[100%] mx-auto justify-center items-center'>
     <div className=' justify-center items-center'>
       <SortandGrid onSortChange={handleSortChange} view={view} setView={setView} />
       <ToursList tours={tours} view={view} />

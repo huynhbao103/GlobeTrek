@@ -27,7 +27,7 @@ const TravelTour = () => {
 
   return (
     <>
-      <div className="background-cover max-md:hidden  "></div>
+      
       <div className="relative container mx-auto mt-8 p-4">
         <h1 className="text-4xl text-white  font-bold mb-4 max-md:text-[#013237]">Tour 3 đảo bằng Cano Nam Phú Quốc - 1 ngày</h1>
         <p className="text-white max-md:text-[#013237] text-lg mb-2">

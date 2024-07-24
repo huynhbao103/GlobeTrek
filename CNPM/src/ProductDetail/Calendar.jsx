@@ -1,35 +1,68 @@
 import React, { useState } from 'react';
-import Modal from './ModalCalendar';
+import ModalCalendar from './ModalCalendar';
 import TourCard from './TourCard';
 import CalendarApp from './CalendarApp';
+import { useDate } from './DateContext';
 
-function calendar() {
-  const [showModal, setShowModal] = useState(false);
+function TourPage() {
+    const { selectedDate, setSelectedDate } = useDate(); // Lấy ngày đã chọn từ context
+    const [showModal, setShowModal] = useState(false);
 
-  return (
-    <div className="p-5 w-full justify-center items-center ">
- <div className=' w-[80%] mx-auto items-center justify-center'>
-      <h1 className="text-2xl font-bold mb-4">Có vé trống cho bạn</h1>
-     
-    <CalendarApp/>
-   
-      <div className="mt-4">
-        <TourCard 
-          title="[PROMO] Tour ghép - Khởi hành tại Phú Quốc" 
-          price="722.850 VND" 
-          oldPrice="800.000 VND" 
-          discount="-10%" 
-        />
-        <TourCard 
-          title="Tour ghép - Khởi hành tại Phú Quốc" 
-          price="800.000 VND" 
-        />
-      </div> </div>
-    
+    // Tính giá dựa trên ngày đã chọn
+    const getPriceForDate = (date) => {
+        const isSpecialDay = (date) => {
+            const dayOfWeek = date.getDay();
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const vietnameseHolidays = [
+                { day: 1, month: 1 },
+                { day: 30, month: 4 },
+                { day: 2, month: 9 },
+            ];
+            return (
+                (dayOfWeek === 0 || dayOfWeek === 6) ||
+                vietnameseHolidays.some(holiday => holiday.day === day && holiday.month === month)
+            );
+        };
 
-      {showModal && <Modal setShowModal={setShowModal} />}
-    </div>
-  );
+        const isSpecial = isSpecialDay(date);
+        return isSpecial ? '360k' : '300k';
+    };
+
+    const price = getPriceForDate(selectedDate);
+
+    // Mở modal
+    const openModal = () => setShowModal(true);
+
+    // Đóng modal
+    const closeModal = () => setShowModal(false);
+
+    // Xử lý thay đổi ngày từ modal
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        closeModal();
+    };
+
+    return (
+        <div className="p-5 w-full justify-center items-center">
+            <div className='w-[80%] mx-auto'>
+
+                    <CalendarApp selectedDate={selectedDate} />
+                    <div className="mt-4">
+                        <TourCard
+                            title="Tour Đặc Biệt"
+                            price={price}
+                            points="500 điểm"
+                            linkToDetails="/tour-details"
+                            linkToTickets="/bodyPay"
+                        />
+                    </div>
+                </div>
+            {showModal && (
+                <ModalCalendar setShowModal={setShowModal} />
+            )}
+        </div>
+    );
 }
 
-export default calendar;
+export default TourPage;

@@ -31,32 +31,17 @@ const Header = () => {
   return (
     <header className="fixed top-0 z-50 w-full  shadow-md  items-center  p-2 bg-white">
       {/* Logo/Image */}
-      <div className=" flex items-center justify-center ">
+      <div className=" w-[80%] mx-auto flex items-center justify-between ">
         {/* Login/Register */}
 
-        <div className="text-center">{user ? <UserInfo /> : <Login />}</div>
 
         <div className="flex">
           <img src={Traveloka} alt="Logo" className=" w-[100px]" />
         </div>
+        
+        <div className="text-center">{user ? <UserInfo /> : <Login />}</div>
 
-        {/* Menu */}
-        <div className="pl-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        </div>
+      
       </div>
     </header>
   );

@@ -5,8 +5,8 @@ import GoogleSignIn from "./GoogleSignIn";
 import LoginFB from './LoginFB';
 
 const registeredUsers = [
-  { email: "user@example.com", password: "password123" },
-  { email: "0987654321", password: "password123" },
+  // { email: "Admin", password: "Admin",role:'admin' },
+ 
 ];
 
 export default function Modal() {
@@ -70,7 +70,9 @@ export default function Modal() {
       setUser({ email: emailOrPhone });
       setIsLoggedIn(true);
       alert("Đăng nhập thành công!");
+      
       closeModal();
+      
     } else {
       alert("Email hoặc mật khẩu không hợp lệ!");
     }
@@ -96,6 +98,7 @@ export default function Modal() {
 
   const confirmLogout = () => {
     localStorage.removeItem("user");
+    window.location.reload();
     setIsLoggedIn(false);
     setUser(null);
     setShowLogoutModal(false);
@@ -125,17 +128,11 @@ export default function Modal() {
             <FontAwesomeIcon icon={faUser} style={{ color: "#4CA771" }} /> Đăng Nhập / Đăng ký
           </button>
         ) : (
-          <div className="flex items-center">
+          <div className="flex px-10 items-center">
             <p className="text-black text-sm font-medium mr-4">
-              Hello, {user.name || user.email}
+              {user.name || user.email}
             </p>
-            <button
-              className="bg-white text-black px-6 py-2 rounded shadow hover:bg-slate-100 text-sm font-medium border border-[#4CA771]"
-              type="button"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+         
           </div>
         )}
       </div>
@@ -264,37 +261,6 @@ export default function Modal() {
                   </a>{" "}
                   của chúng tôi.
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showLogoutModal && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div
-            className="fixed inset-0 w-full h-full bg-black opacity-40"
-            onClick={cancelLogout}
-          />
-          <div className="flex items-center justify-center min-h-screen px-4 py-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md z-10 relative transition-transform transform">
-              <h2 className="text-2xl font-bold mb-3">Đang đăng xuất</h2>
-              <p className="mb-4">
-                Ôi không! Bạn sẽ bỏ lỡ rất nhiều điều khi đăng nhập: Điểm thưởng Traveloka, Pasenger Quick Pick, Thông báo giá vé, và những quyền lợi khác chỉ dành cho thành viên. Bạn có chắc vẫn muốn đăng xuất?
-              </p>
-              <div className="flex justify-end">
-                <button
-                  className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
-                  onClick={cancelLogout}
-                >
-                  Không
-                </button>
-                <button
-                  className="bg-red-500 text-white px-4 py-2 rounded-md"
-                  onClick={confirmLogout}
-                >
-                  Có
-                </button>
               </div>
             </div>
           </div>

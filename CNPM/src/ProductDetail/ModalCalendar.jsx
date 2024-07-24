@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; 
+import 'react-calendar/dist/Calendar.css';
+import { useDate } from './DateContext'; // Import useDate hook
 
-function ModalCalendar({ setShowModal, onDateChange }) {
+function ModalCalendar({ setShowModal }) {
+    const { setSelectedDate } = useDate();
     const [date, setDate] = useState(new Date());
 
-    useEffect(() => {
-        onDateChange(date);
-    }, [date]);
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() + 1);
+
+    const handleDateChange = useCallback((newDate) => {
+        if (newDate >= minDate) {
+            setDate(newDate);
+            setSelectedDate(newDate); // Cập nhật ngày đã chọn trong context
+            setShowModal(false);
+        }
+    }, [setShowModal, minDate, setSelectedDate]);
 
     const isSpecialDay = (date) => {
         const dayOfWeek = date.getDay();
@@ -25,8 +34,7 @@ function ModalCalendar({ setShowModal, onDateChange }) {
     };
 
     const getPriceForDate = (date) => {
-        const isSpecial = isSpecialDay(date);
-        return isSpecial ? '360k' : '300k';
+        return isSpecialDay(date) ? '360k' : '300k';
     };
 
     const tileContent = ({ date, view }) => {
@@ -37,23 +45,7 @@ function ModalCalendar({ setShowModal, onDateChange }) {
         return null;
     };
 
-    const onChange = (newDate) => {
-        setDate(newDate);
-        onDateChange(newDate);
-        setShowModal(false);
-    };
-
-    const onActiveStartDateChange = ({ activeStartDate }) => {
-        setDate(activeStartDate);
-        onDateChange(activeStartDate);
-    };
-
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
     return (
-        
         <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-75 flex justify-center items-center">
             <div className="bg-white p-6 rounded shadow-lg w-auto relative">
                 <button
@@ -65,13 +57,12 @@ function ModalCalendar({ setShowModal, onDateChange }) {
                 <h2 className="text-xl font-bold mb-4">Chọn ngày</h2>
                 <div className="my-4">
                     <Calendar
-                        onChange={onChange}
+                        onChange={handleDateChange}
                         value={date}
                         tileContent={tileContent}
                         showNeighboringMonth={true}
                         minDetail="year"
-                        minDate={tomorrow}
-                        onActiveStartDateChange={onActiveStartDateChange}
+                        minDate={minDate}
                     />
                 </div>
             </div>

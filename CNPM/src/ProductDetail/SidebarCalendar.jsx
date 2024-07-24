@@ -12,8 +12,12 @@ function SidebarCalendar({ selectedDate, onDateChange }) {
         const dates = [];
         const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
         const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+        const today = new Date();
 
-        for (let date = startOfMonth; date <= endOfMonth; date.setDate(date.getDate() + 1)) {
+        // Đặt ngày bắt đầu từ ngày mai
+        const startDate = today.getDate() < endOfMonth.getDate() ? today.setDate(today.getDate() + 1) : startOfMonth;
+
+        for (let date = new Date(startDate); date <= endOfMonth; date.setDate(date.getDate() + 1)) {
             dates.push(new Date(date));
         }
         return dates;
@@ -33,41 +37,42 @@ function SidebarCalendar({ selectedDate, onDateChange }) {
         slidesToShow: 7,
         slidesToScroll: 7,
         swipeToSlide: false,
+        initialSlide: 0,
         responsive: [
             {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 5,
-                slidesToScroll: 5,
-              }
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 5,
+                }
             },
             {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-              }
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                }
             },
             {
-                dots:false,
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-              }
+                dots: false,
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                }
             },
         ]
     };
 
     return (
-        <div className="w-[80%]">
+        <div className="w-[80%] ">
             <Slider {...settings} ref={sliderRef}>
                 {dates.map((date, index) => (
                     <button
                         id={date.toDateString()}
                         key={index}
                         className={`p-2 m-4 rounded border ${
-                            date.toDateString() === selectedDate.toDateString() ? 'bg-[#4CA771] text-white font-bold' : ''
+                            date.toDateString() === selectedDate.toDateString() ? 'bg-[#4CA771] text-white font-bold' : ' font-bold'
                         }`}
                         onClick={() => onDateChange(date)}
                     >

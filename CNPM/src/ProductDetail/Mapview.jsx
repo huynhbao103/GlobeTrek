@@ -14,7 +14,7 @@ function Mapview() {
   };
 
   return (
-    <div className="bg-gray-100 flex shadow-md h-28 w-96 p-6 m-6  cursor-pointer">
+    <div className="bg-gray-100 w-[80%] flex shadow-md h-28  p-6 m-6  cursor-pointer">
       {modalOpen && <Modal closeModal={closeModal}><GoogleMap /></Modal>}
       <div onClick={openModal} className="flex">
         <svg
@@ -38,7 +38,7 @@ function Mapview() {
             fillRule="evenodd"
             clipRule="evenodd"
             d="M12 12.5C13.6569 12.5 15 11.1569 15 9.5C15 7.84315 13.6569 6.5 12 6.5C10.3431 6.5 9 7.84315 9 9.5C9 11.1569 10.3431 12.5 12 12.5Z"
-            stroke="#0194F3"
+            stroke="#35845F"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -46,7 +46,7 @@ function Mapview() {
         </svg>
         <div className="flex flex-col justify-center ml-4">
           <div className="flex flex-row">
-            <p className="text-green-500 font-bold text-lg">Xem bản đồ</p>
+            <p className="text-[#35845F] font-bold text-lg">Xem bản đồ</p>
             <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

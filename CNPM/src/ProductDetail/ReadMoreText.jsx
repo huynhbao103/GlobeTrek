@@ -16,19 +16,19 @@ const TourInfo = () => {
 
   return (
     <div className="bg-gray-100 flex justify-center items-center m-auto shadow-md w-[80%] p-6 ">
-      <div className='bg-green-300 flex rounded-full w-28 h-8 justify-center items-center'>
+      <div className='bg-[#165448] flex rounded-3xl sm:w-28 w-48  h-14 justify-center items-center'>
         <p className='text-white font-bold text-xl'> ? </p>
       </div>
       <div className='flex flex-col justify-center ml-4'>
         <div className='flex flex-row'>
-          <p className='text-green-500 font-bold text-lg'>Bạn sẽ trải nghiệm</p>
+          <p className='text-[#35845F] font-bold text-lg'>Bạn sẽ trải nghiệm</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 text-green-500 font-bold"
+            className="w-6 h-6 text-[#35845F] font-bold"
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
           </svg>
