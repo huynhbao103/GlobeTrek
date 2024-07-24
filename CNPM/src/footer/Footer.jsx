@@ -46,11 +46,11 @@ const Footer = () => {
             <div>
               <h3 className="text-white font-bold mb-4">Về Traveloka</h3>
               <ul>
-                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] text-[#013237] hover:underline">Cách đặt chỗ</a></li>
-                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] text-[#013237] hover:underline">Liên hệ chúng tôi</a></li>
-                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] hover:underline text-[#013237]">Trợ giúp</a></li>
-                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] text-[#013237] hover:underline">Tuyển dụng</a></li>
-                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] text-[#013237] hover:underline">Về chúng tôi</a></li>
+                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237]  hover:underline">Cách đặt chỗ</a></li>
+                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] hover:underline">Liên hệ chúng tôi</a></li>
+                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] hover:underline ">Trợ giúp</a></li>
+                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237]  hover:underline">Tuyển dụng</a></li>
+                <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237]  hover:underline">Về chúng tôi</a></li>
                 <li className='py-1'><a href="#" className=" font-medium hover:text-white text-[#013237] hover:underline">Tính năng mới ra mắt</a></li>
               </ul>
             </div>
