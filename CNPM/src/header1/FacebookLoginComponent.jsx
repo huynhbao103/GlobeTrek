@@ -48,7 +48,7 @@ const FacebookLoginComponent = () => {
   };
 
   return (
-    <div className=' flex items-center justify-center p-2 bg-white cursor-pointer text-[#0194f3] rounded-md border border-[#0194f3] font-bold'>
+    <div className=' flex items-center justify-center p-2 max-w-sm w-full bg-white cursor-pointer text-[#0194f3] rounded-md border border-[#0194f3] font-bold'>
       <img
                       className="w-6 p-1 "
                       src={FacebookIcon}
