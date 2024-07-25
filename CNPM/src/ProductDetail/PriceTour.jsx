@@ -9,7 +9,7 @@ const tourInfo = {
 
 function TourInfo() {
   return (
-    <div className="w-full border">
+    <div className="w-full ">
     <div className=" w-[80%] mx-auto pb-6">
       <h1 className="text-xl font-bold mb-4">Thông tin chung</h1>
       <div className="space-y-4">

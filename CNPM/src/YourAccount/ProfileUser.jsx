@@ -34,7 +34,7 @@ function ProfileUser() {
   return (
     <div>
       <div className="bg-[rgba(174,249,231,0.5)] rounded-lg mb-6 p-4">
-        <p className=''>
+        <p className='sm:text-sm text-md max-w-30 w-auto'>
           Bạn muốn nhận thông báo đăng nhập mới và các hoạt động khác của
           <span
             className="font-bold text-[#4CA771] cursor-pointer"
@@ -44,7 +44,7 @@ function ProfileUser() {
           </span>
         </p>
       </div>
-      <div className='bg-white rounded-md p-8 mt-4'>
+      <div className='bg-white sm:text-md text-sm rounded-md p-8 mt-4'>
         <h2 className="text-xl font-semibold mb-2">Dữ liệu cá nhân</h2>
         <hr className="mb-4" />
         <label className="block font-bold mb-2">Tên đầy đủ</label>

@@ -59,7 +59,7 @@ const UserInfo = () => {
           </div>
           <ul className="py-2">
           <li className="px-4 py-2 cursor-pointer hover:bg-green-100">0 Điểm</li>
-          <Link to='Settings'>
+          <Link to='MainLayout'>
             <li className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center">
               <img src={icon1} alt="Chỉnh sửa hồ sơ" className="w-4 h-4 mr-2" />
               Chỉnh sửa hồ sơ

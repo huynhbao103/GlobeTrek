@@ -7,7 +7,9 @@ import BodyPay from './Payment/bodyPay.jsx';
 import BookingForm from './Payment/BookingForm.jsx';
 import { DateProvider } from './ProductDetail/DateContext.jsx'; // Đảm bảo đường dẫn chính xác
 import Payment from './Payment/Payment.jsx';
-import Settings from './YourAccount/Settings.jsx'
+import MainLayout  from './YourAccount/MainLayout.jsx'
+
+
 
 function App() {
   return (
@@ -21,7 +23,9 @@ function App() {
           <Route path="/bodyPay" element={<BodyPay />} />
           <Route path='/BookingForm' element={<BookingForm/>}/>
           <Route path='/Payment' element={<Payment/>}/>
-          <Route path='/Settings' element={<Settings/>}/>
+          <Route path='/MainLayout' element={<MainLayout />}/>
+
+          
           
         </Routes>
         {/* <Footer /> */}
