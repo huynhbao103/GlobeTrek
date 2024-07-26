@@ -5,9 +5,15 @@ import ProductBody from './product/Body.jsx';
 import BodyProDetail from './ProductDetail/Bodydetail.jsx';
 import BodyPay from './Payment/bodyPay.jsx';
 import BookingForm from './Payment/BookingForm.jsx';
-import { DateProvider } from './ProductDetail/DateContext.jsx'; // Đảm bảo đường dẫn chính xác
+import { DateProvider } from './Context/DateContext.jsx'; // Đảm bảo đường dẫn chính xác
 import Payment from './Payment/Payment.jsx';
 import MainLayout  from './YourAccount/MainLayout.jsx'
+import Settings  from './YourAccount/Settings.jsx'
+import SetPlace  from './YourAccount/SetPlace.jsx'
+import Transaction  from './YourAccount/Transaction.jsx'
+import savedPassengers from './YourAccount/savedPassengers.jsx'
+import Refunds  from './YourAccount/Refunds.jsx'
+
 
 
 
@@ -24,11 +30,15 @@ function App() {
           <Route path='/BookingForm' element={<BookingForm/>}/>
           <Route path='/Payment' element={<Payment/>}/>
           <Route path='/MainLayout' element={<MainLayout />}/>
-
-          
+         
+          <Route path="/settings" element={<Settings />} />
+        <Route path="/setplace" element={<SetPlace />} />
+        <Route path="/savedPassengers" element={<savedPassengers/>} />
+        <Route path="/Refunds" element={<Refunds />} />
+        <Route path="/Transaction" element={<Transaction />} /> 
           
         </Routes>
-        {/* <Footer /> */}
+    
       </Router>
     </DateProvider>
   );

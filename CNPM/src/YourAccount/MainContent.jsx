@@ -1,7 +1,7 @@
 import React from 'react';
 import Settings from './Settings';
 import SetPlace from './SetPlace';
-import Passenger from './Passenger';
+import SavedPassengers from './savedPassengers';
 import Refunds from './Refunds';
 import Transaction from './Transaction';
 // Import other components as needed
@@ -11,16 +11,16 @@ const MainContent = ({ selectedSection }) => {
     case 'Settings':
       return <Settings />;
     case 'SetPlace':
-      return <SetPlace/>;
-    case 'Passenger':
-      return <Passenger />;
-    case 'refunds':
+      return <SetPlace />;
+    case 'SavedPassengers':
+      return <SavedPassengers />;
+    case 'Refunds':
       return <Refunds />;
     case 'Transaction':
-        return <Transaction/>
-    // Add cases for other sections
+      return <Transaction />;
+    // Add cases for other sections as needed
     default:
-      return <p>Select an option from the sidebar</p>;
+      return <Settings />;
   }
 };
 

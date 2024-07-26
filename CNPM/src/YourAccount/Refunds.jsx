@@ -34,7 +34,7 @@ const Refunds = () => {
   };
 
   return (
-    <div className=" bg-white p-5 rounded-lg max-w-full mt-40 justify-center  mx-auto">
+    <div className=" bg-white p-5 rounded-lg max-w-full justify-center  mx-auto">
       <div className="flex-grow p-5">
         <header className="bg-blue-500 text-white p-5 rounded-lg text-center">
           <h1 className="text-2xl">Quản lý hoàn tiền của bạn</h1>

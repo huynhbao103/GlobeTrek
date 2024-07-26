@@ -12,6 +12,7 @@ import User from "../assets/User.png";
 
 const SidebarMenu = ({ setSelectedSection }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [activeSection, setActiveSection] = useState('Settings');
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user) {
@@ -27,8 +28,18 @@ const SidebarMenu = ({ setSelectedSection }) => {
     window.location.reload();
   };
 
+  const handleSectionClick = (section) => {
+    setSelectedSection(section);
+    setActiveSection(section);
+  };
+
+  const menuItemClass = (section) =>
+    `px-4 py-2 mt-2 cursor-pointer flex rounded-lg items-center hover:bg-green-100 ${
+      activeSection === section ? 'bg-green-300' : ''
+    }`;
+
   return (
-    <div className="mt-2 w-auto p-4 bg-white  border border-gray-200 rounded-lg shadow-lg">
+    <div className="mt-2 w-auto p-4 bg-white border border-gray-200 rounded-lg shadow-lg">
       <div className='flex items-center'>
         <img className="w-6 h-6 bg-[#00875A] rounded-full" src={User} alt="User" />
         <div className="p-4">
@@ -37,57 +48,47 @@ const SidebarMenu = ({ setSelectedSection }) => {
         </div>
       </div>
       <ul className="py-2">
-        <li className="px-4 py-2 cursor-pointer hover:bg-green-100">0 Điểm</li>
+        <li className="px-4 py-2 rounded-lg cursor-pointer hover:bg-green-100">0 Điểm</li>
     
         <hr/>
         <li
-          className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center"
-          onClick={() => setSelectedSection('SetPlace')}
+          className={menuItemClass('SetPlace')}
+          onClick={() => handleSectionClick('SetPlace')}
         >
           <img src={icon4} alt="Đặt chỗ của tôi" className="w-4 h-4 mr-2" />
           Đặt chỗ của tôi
         </li>
         <li
-          className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center"
-          onClick={() => setSelectedSection('Transaction')}
+          className={menuItemClass('Transaction')}
+          onClick={() => handleSectionClick('Transaction')}
         >
           <img src={icon3} alt="Danh sách giao dịch" className="w-4 h-4 mr-2" />
           Danh sách giao dịch
         </li>
         <li
-          className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center"
-          onClick={() => setSelectedSection('refunds')}
+          className={menuItemClass('refunds')}
+          onClick={() => handleSectionClick('refunds')}
         >
           <img src={icon5} alt="Hoàn tiền" className="w-4 h-4 mr-2" />
           Refunds <span className="mr-2 px-2 bg-yellow-200 rounded-full font-bold">New!</span>
         </li>
-
         <li
-          className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center"
-          onClick={() => setSelectedSection('')}
+          className={menuItemClass('SavedPassengers')}
+          onClick={() => handleSectionClick('SavedPassengers')}
         > 
           <img src={icon7} alt="Hành khách đã lưu" className="w-4 h-4 mr-2" />
           Hành khách đã lưu
         </li>
-
-
-        <li
-          className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center"
-          onClick={() => setSelectedSection('Passenger')}
-        > 
-          <img src={icon8} alt="Khuyến mãi" className="w-4 h-4 mr-2" />
-          Khuyến mãi
-        </li>
-
-
         {/* Add other sections */}
         <hr className='my-4'/>
-        <li className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center"
-         onClick={() => setSelectedSection('Settings')}>
+        <li
+          className={menuItemClass('Settings')}
+          onClick={() => handleSectionClick('Settings')}
+        >
           <img src={icon1} alt="Chỉnh sửa hồ sơ" className="w-4 h-4 mr-2" />
           Tài Khoản
         </li>
-        <li className="px-4 py-2 hover:bg-green-100 cursor-pointer flex items-center">
+        <li className="px-4 py-2 cursor-pointer flex items-center hover:bg-green-100">
           <button
             className="flex items-center py-2 hover:bg-green-100 cursor-pointer"
             onClick={() => setShowLogoutModal(true)}

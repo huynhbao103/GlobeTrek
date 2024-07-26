@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalCalendar from './ModalCalendar';
 import SidebarCalendar from './SidebarCalendar';
-import { useDate } from './DateContext'; // Import useDate hook
+import { useDate } from '../Context/DateContext'; // Import useDate hook
 
 function CalendarApp() {
     const { selectedDate, setSelectedDate } = useDate();

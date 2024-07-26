@@ -24,8 +24,8 @@ const Settings = () => {
   return (
     <>
    
-      <div className='w-full h-auto  mt-32 sm:mt-40'>
-        <div className="flex max-w-[1280px] justify-center mx-auto flex-row items-start py-10">
+      <div className='w-full h-auto'>
+        <div className="flex max-w-[1280px] justify-center mx-auto flex-row items-start pb-10">
           {/* <SidebarAccount /> */}
           <div className="w-full max-w-5xl ml-5 mx-auto rounded-lg">
             <h1 className="sm:text-2xl text-sm font-bold mb-4">Cài đặt</h1>

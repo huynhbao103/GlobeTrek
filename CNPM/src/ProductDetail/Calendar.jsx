@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ModalCalendar from './ModalCalendar';
 import TourCard from './TourCard';
 import CalendarApp from './CalendarApp';
-import { useDate } from './DateContext';
+import { useDate } from '../Context/DateContext';
 
 function TourPage() {
     const { selectedDate, setSelectedDate } = useDate(); // Lấy ngày đã chọn từ context

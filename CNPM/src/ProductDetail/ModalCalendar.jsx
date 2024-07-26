@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useDate } from './DateContext'; // Import useDate hook
+import { useDate } from '../Context/DateContext'; // Import useDate hook
 
 function ModalCalendar({ setShowModal }) {
     const { setSelectedDate } = useDate();

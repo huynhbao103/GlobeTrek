@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import tour1 from '../assets/tour1.png';
 import SidebarCalendar from '../ProductDetail/SidebarCalendar';
-import { useDate } from '../ProductDetail/DateContext';
+import { useDate } from '../Context/DateContext';
 import backicon from '../assets/backicon.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; // Import axios for making API requests
