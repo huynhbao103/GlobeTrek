@@ -65,7 +65,8 @@ function SidebarCalendar({ selectedDate, onDateChange }) {
     };
 
     return (
-        <div className="w-[80%] ">
+    
+        <div className="w-[100%]  ">
             <Slider {...settings} ref={sliderRef}>
                 {dates.map((date, index) => (
                     <button
@@ -82,6 +83,7 @@ function SidebarCalendar({ selectedDate, onDateChange }) {
                 ))}
             </Slider>
         </div>
+ 
     );
 }
 

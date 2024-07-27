@@ -5,7 +5,7 @@ import GoogleSignIn from "./GoogleSignIn";
 import LoginFB from './LoginFB';
 
 const registeredUsers = [
-  // { email: "Admin", password: "Admin",role:'admin' },
+  { email: "Admin", password: "Admin",role:'admin' },
  
 ];
 

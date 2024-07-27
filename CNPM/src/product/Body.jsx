@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SortandGrid from './SortandGrid';
 import ToursList from './TourList';
 import '../index.css';
@@ -21,6 +21,14 @@ const App = () => {
 
   const [sortOption, setSortOption] = useState('popular');
   const [view, setView] = useState('grid');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data loading
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust time if needed
+  }, []);
 
   const handleSortChange = (option) => {
     setSortOption(option);
@@ -37,21 +45,20 @@ const App = () => {
 
   return (
     <>
-    <div className='bg-[rgba(174,249,231,0.2)] mt-40'>
-    <Header/>
-    <div className=' max-w-[1280px]  w-[100%] mx-auto justify-center items-center'>
-    <div className=' justify-center items-center'>
-      <SortandGrid onSortChange={handleSortChange} view={view} setView={setView} />
-      <ToursList tours={tours} view={view} />
+      <div className="bg-[rgba(174,249,231,0.2)] mt-40">
+        <Header />
+        <div className="max-w-[1280px] w-[100%] mx-auto justify-center items-center">
+          <div className="justify-center items-center">
+            <SortandGrid onSortChange={handleSortChange} view={view} setView={setView} loading={loading} />
+            <ToursList tours={tours} view={view} loading={loading} />
+          </div>
+        </div>
+        <div className="max-sm:hidden">
+          <Footer />
+        </div>
       </div>
-      </div>
-      <div className='max-sm:hidden'>
-     
-      <Footer/>
-      </div>
-      </div>
-      </>
+    </>
   );
-};  
+};
 
 export default App;

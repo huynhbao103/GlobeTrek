@@ -45,7 +45,7 @@ function TourPage() {
 
     return (
         <div className="p-5 w-full justify-center items-center">
-            <div className='w-[80%] mx-auto'>
+            <div className='w-[100%] mx-auto'>
 
                     <CalendarApp selectedDate={selectedDate} />
                     <div className="mt-4">

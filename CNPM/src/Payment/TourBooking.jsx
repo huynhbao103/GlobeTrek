@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import tour1 from '../assets/tour1.png';
 import SidebarCalendar from '../ProductDetail/SidebarCalendar';
 import { useDate } from '../Context/DateContext';
@@ -12,6 +14,7 @@ const TourBooking = () => {
   const [childCount, setChildCount] = useState(0); // Initialize with 0
   const [prices, setPrices] = useState({ adultPrice: 1000, childPrice: 200 });
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     // Fetch price data from API
@@ -19,8 +22,10 @@ const TourBooking = () => {
       try {
         const response = await axios.get('http://localhost:5000/prices'); // URL of your API
         setPrices(response.data.prices);
+        setLoading(false); // Set loading to false once data is fetched
       } catch (error) {
         console.error('Error fetching prices:', error);
+        setLoading(false); // Also set loading to false on error
       }
     };
 
@@ -70,111 +75,120 @@ const TourBooking = () => {
     // Save to local storage
     localStorage.setItem('bookingData', JSON.stringify(bookingData));
   
-    // Redirect to UserProfile or Price page
+    // Redirect to BookingForm page
     window.location.href = '/BookingForm'; // Redirect to BookingForm page
   };
-  
 
   return (
-    <div className=''>
+    <div className='max-w-7xl'>
       <div className="p-4 mx-auto">
-        <div className="w-[100%] mx-auto  items-center mb-8">
-          <Link to='/ProDetail' className='sm:mb-5   shadow-md'>
+        <div className="w-[100%] mx-auto items-center mt-8 max-sm:mb-4">
+          <Link to='/ProDetail' className='sm:mb-5 shadow-md'>
             <img className='w-4 h-4' src={backicon} alt="Back" />
           </Link>
         </div>
 
-        <div className="sm:flex w-[80%] sm:w-full mx-auto">
+        <div className="sm:flex w-[100%] sm:w-full mx-auto">
           {/* Tour Information Section */}
-          <div className="sm:w-[70%] sm:mt-16  sm:shadow-xl rounded-md">
-            <img
-              src={tour1}
-              alt="Tour"
-              className="w-full rounded-lg"
-            />
+          <div className="sm:w-1/3 sm:mt-16 sm:shadow-xl rounded-md">
+            {loading ? (
+              <Skeleton height={200} />
+            ) : (
+              <img src={tour1} alt="Tour" className="w-full rounded-lg" />
+            )}
             <div className="ml-4">
               <h2 className="text-xl font-bold mb-2">
-                Tour ghép cho tối đa 40 khách - Khởi hành TPHCM cùng Vietjet Air
+                {loading ? <Skeleton width={300} /> : 'Tour ghép cho tối đa 40 khách - Khởi hành TPHCM cùng Vietjet Air'}
               </h2>
-              <p>Không thể hoàn tiền</p>
+              <p>{loading ? <Skeleton width={150} /> : 'Không thể hoàn tiền'}</p>
               <button className="mt-4 bg-green-100 text-green-500 py-2 px-4 rounded-lg">
-                Xem thông tin vé
+                {loading ? <Skeleton width={150} height={30} /> : 'Xem thông tin vé'}
               </button>
             </div>
           </div>
 
           {/* Additional Sections */}
-          <div className="w-[90%] p-4 ml-4">
+          <div className="sm:w-2/3 p-4 ml-4">
             <div className="mt-4">
               <div className="w-full justify-center items-center">
-                <SidebarCalendar selectedDate={selectedDate} onDateChange={handleDateChange} />
+                {loading ? (
+                  <Skeleton height={300} />
+                ) : (
+                  <SidebarCalendar selectedDate={selectedDate} onDateChange={handleDateChange} />
+                )}
               </div>
               <div className="mt-4 bg-green-100 p-4 rounded-lg">
-                <p className="text-lg">Ngày tham quan đã chọn</p>
+                <p className="text-lg">{loading ? <Skeleton width={200} /> : 'Ngày tham quan đã chọn'}</p>
                 <h3 className="text-xl font-bold">
-                  {selectedDate ? selectedDate.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : 'Chưa chọn ngày'}
+                  {loading ? <Skeleton width={250} /> : (selectedDate ? selectedDate.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : 'Chưa chọn ngày')}
                 </h3>
               </div>
             </div>
             <div className="mt-4">
               <div className="flex justify-between items-center">
                 <div>
-                  <h4 className="text-xl font-bold">Người lớn</h4>
-                  <p className="text-green-500">{prices.adultPrice.toLocaleString()} VND</p>
-                  <p className="text-gray-500">Nhận 14.535 xu</p>
+                  <h4 className="text-xl font-bold">{loading ? <Skeleton width={150} /> : 'Người lớn'}</h4>
+                  <p className="text-green-500">
+                    {loading ? <Skeleton width={80} /> : prices.adultPrice.toLocaleString()} {loading ? <Skeleton width={50} /> : 'VND'}
+                  </p>
+                  <p className="text-gray-500">{loading ? <Skeleton width={150} /> : 'Nhận 14.535 xu'}</p>
                 </div>
                 <div className="flex items-center">
                   <button
                     className="px-2 py-1 bg-gray-200 rounded-lg"
                     onClick={() => decreaseCount(setAdultCount, adultCount, true)}
                   >
-                    -
+                    {loading ? <Skeleton width={20} height={20} /> : '-'}
                   </button>
-                  <span className="mx-2">{adultCount}</span>
+                  <span className="mx-2">{loading ? <Skeleton width={30} /> : adultCount}</span>
                   <button
                     className="px-2 py-1 bg-gray-200 rounded-lg"
                     onClick={() => increaseCount(setAdultCount, adultCount)}
                   >
-                    +
+                    {loading ? <Skeleton width={20} height={20} /> : '+'}
                   </button>
                 </div>
               </div>
               <div className="flex justify-between items-center mt-4">
                 <div>
-                  <h4 className="text-xl font-bold">Trẻ em</h4>
-                  <p className="text-green-500">{prices.childPrice.toLocaleString()} VND</p>
-                  <p className="text-gray-500">Nhận 14.535 xu</p>
+                  <h4 className="text-xl font-bold">{loading ? <Skeleton width={150} /> : 'Trẻ em'}</h4>
+                  <p className="text-green-500">
+                    {loading ? <Skeleton width={80} /> : prices.childPrice.toLocaleString()} {loading ? <Skeleton width={50} /> : 'VND'}
+                  </p>
+                  <p className="text-gray-500">{loading ? <Skeleton width={150} /> : 'Nhận 14.535 xu'}</p>
                 </div>
                 <div className="flex items-center">
                   <button
                     className="px-2 py-1 bg-gray-200 rounded-lg"
                     onClick={() => decreaseCount(setChildCount, childCount)}
                   >
-                    -
+                    {loading ? <Skeleton width={20} height={20} /> : '-'}
                   </button>
-                  <span className="mx-2">{childCount}</span>
+                  <span className="mx-2">{loading ? <Skeleton width={30} /> : childCount}</span>
                   <button
                     className="px-2 py-1 bg-gray-200 rounded-lg"
                     onClick={() => increaseCount(setChildCount, childCount)}
                   >
-                    +
+                    {loading ? <Skeleton width={20} height={20} /> : '+'}
                   </button>
                 </div>
               </div>
             </div>
             {errorMessage && (
               <div className="mt-4 p-4 bg-red-100 text-red-500 rounded-lg">
-                {errorMessage}
+                {loading ? <Skeleton width={200} height={30} /> : errorMessage}
               </div>
             )}
             <div className="mt-4 flex justify-between items-center">
-              <h3 className="text-2xl font-bold">{totalPrice.toLocaleString()} VND</h3>
+              <h3 className="text-2xl font-bold">
+                {loading ? <Skeleton width={150} /> : totalPrice.toLocaleString()} {loading ? <Skeleton width={50} /> : 'VND'}
+              </h3>
               <Link 
                 to='/BookingForm' 
                 className="bg-[#4CA771] font-bold text-white py-2 px-4 rounded-lg"
                 onClick={handleBooking}
               >
-                Đặt ngay
+                {loading ? <Skeleton width={100} height={30} /> : 'Đặt ngay'}
               </Link>
             </div>
           </div>
