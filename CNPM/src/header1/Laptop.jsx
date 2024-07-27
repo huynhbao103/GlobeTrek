@@ -6,7 +6,8 @@ import Suppor from './Suppor';
 import Login from './Login';
 import More from './More';
 import UserInfo from './UserInfo';
-import MainContent from '../YourAccount/MainContent'; // Import MainContent component
+import Savelist from './Savelist'; 
+import { Link } from "react-router-dom";
 
 function Laptop() {
   const [user, setUser] = useState(null);
@@ -52,7 +53,8 @@ function Laptop() {
               </div>
               <Suppor />
               <a className='cursor-pointer hover:bg-slate-100 rounded-md py-2 px-2 text-sm font-medium'>Hợp tác với chúng tôi</a>
-              <a className='cursor-pointer hover:bg-slate-100 rounded-md py-2 px-2 text-sm font-medium'>Đã lưu</a>
+              
+              <Link to='/Savelist'><a className='cursor-pointer hover:bg-slate-100 rounded-md py-2 px-2 text-sm font-medium'>Đã lưu</a></Link>
               <a className='cursor-pointer hover:bg-slate-100 rounded-md py-2 px-2 text-sm font-medium' onClick={() => setSelectedSection('SetPlace')}>Đặt chỗ của tôi</a>
               {user ? <UserInfo  /> : <Login />}
               {/* <Register/> */}
