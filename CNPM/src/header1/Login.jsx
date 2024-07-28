@@ -248,14 +248,14 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
                                 <GoogleSignIn recaptchaToken={recaptchaToken} disabled={!submitEnabled} />
                                 <LoginFB />
                             </div>
-                            <div className="flex mx-auto justify-center items-center">
+                            <div className="flex mx-auto mb-6 justify-center items-center">
                                 <ReCaptcha
                                     sitekey="6Le4TBoqAAAAAPQljcyv-mNasoIjpAgJGkR6g534"
                                     callback={handleRecaptcha}
                                     size="normal"
                                 />
                             </div>
-                            <div className="text-sm text-gray-600 text-center">
+                            <div className="text-sm text-gray-600 mt-2 text-center">
                                 Bằng cách đăng ký, bạn đồng ý với{" "}
                                 <a href="#" className="text-blue-500 font-bold">
                                     Điều khoản & Điều kiện
