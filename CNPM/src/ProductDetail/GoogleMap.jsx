@@ -30,13 +30,13 @@ function GoogleMap() {
             </p>
           </div>
 
-          <div className="w-full py-2 my-4">
+          <div className="w-[100%] py-2 my-4">
             {loading ? (
               <Skeleton height={250} />
             ) : (
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.460294954711!2d106.66478987465537!3d10.776014689372746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752edb765b5c25%3A0x9a3519bdad5a85a3!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOZ2_huqFpIG5n4buvIC0gVGluIGjhu41jIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCAoSFVGTElUKQ!5e0!3m2!1svi!2s!4v1721238684990!5m2!1svi!2s"
-                width="100%"
+                width="60%"
                 height="250"
                 style={{ border: 0 }}
                 allowFullScreen=""

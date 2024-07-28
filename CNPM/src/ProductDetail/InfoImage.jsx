@@ -34,7 +34,7 @@ const TravelTour = () => {
   return (
     <>
       <div className="relative container mx-auto mt-8 p-4">
-        <h1 className="text-4xl text-white font-bold mb-4 max-md:text-[#013237]">
+        <h1 className="text-xl text-white font-bold mb-4 md:text-4xl max-md:text-[#013237]">
           {loading ? <Skeleton width={300} /> : 'Tour 3 đảo bằng Cano Nam Phú Quốc - 1 ngày'}
         </h1>
         <p className="text-white max-md:text-[#013237] text-lg mb-2">
@@ -46,10 +46,10 @@ const TravelTour = () => {
           </span>
         </p>
         <div className="flex">
-          <p className="text-white max-md:text-[#013237] text-lg mb-2">
+          <p className="text-white max-md:text-[#013237] text-sm md:text-lg mb-2">
             {loading ? <Skeleton width={200} /> : 'Ngày tour gần nhất | Thứ, 13 Jul 2024'}
           </p>
-          <p className="text-white max-md:text-[#013237] text-lg ml-3 mb-4">
+          <p className="text-white max-md:text-[#013237] text-sm md:text-lg ml-3 mb-4">
             {loading ? <Skeleton width={200} /> : 'Thời gian tour | 8 Hours 30 Minutes'}
           </p>
         </div>

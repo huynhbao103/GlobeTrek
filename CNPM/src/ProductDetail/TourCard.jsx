@@ -27,15 +27,11 @@ function TourCard({ title, price, points, link }) {
           <a href={link} className="text-[#4CA771] block mt-1">Xem chi tiết</a>
         )}
         <div className="mt-2 flex items-center">
-          {loading ? (
-            <Skeleton circle={true} height={24} width={24} />
-          ) : (
-            <img src={easyRefundIcon} alt="Easy Refund" className="h-6 w-6 mr-2" />
-          )}
+         
           {loading ? (
             <Skeleton width={100} height={24} />
           ) : (
-            <span className="bg-[#4CA771] text-white py-1 px-2 rounded-full">Easy Refund</span>
+            <span className="bg-[#4CA771] text-white py-1 items-start px-2 rounded-full">Easy Refund</span>
           )}
         </div>
       </div>

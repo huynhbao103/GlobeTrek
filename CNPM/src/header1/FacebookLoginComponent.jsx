@@ -5,10 +5,9 @@ const FacebookLoginComponent = () => {
   useEffect(() => {
     window.fbAsyncInit = function() {
       window.FB.init({
-        appId      : '1413752532673284', // Thay YOUR_APP_ID bằng App ID của bạn
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v10.0'
+        appId      : '1413752532673284',
+      xfbml      : true,
+      version    : 'v20.0'
       });
 
       window.FB.AppEvents.logPageView();

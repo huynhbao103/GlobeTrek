@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from '../footer/Footer';
-
+import tour from '../assets/tour1.png'
 const savedItems = [
   {
     id: 1,
@@ -9,7 +9,7 @@ const savedItems = [
     rating: "10/10 (1)",
     location: "xã Của Dương",
     price: "1.300.000 VND",
-    imageUrl: "URL_ẢNH_1", // Thay thế bằng URL ảnh thực tế
+    imageUrl: tour, // Thay thế bằng URL ảnh thực tế
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const savedItems = [
     rating: "9.4/10 (106)",
     location: "Thành phố Hạ Long",
     price: "759.000 VND",
-    imageUrl: "URL_ẢNH_2", // Thay thế bằng URL ảnh thực tế
+    imageUrl: tour, // Thay thế bằng URL ảnh thực tế
   },
 ];
 
@@ -31,7 +31,7 @@ const SavedList = () => {
       <div className="space-y-4">
         {savedItems.map(item => (
           <div key={item.id} className="p-4 border rounded-lg shadow">
-            <img src={item.imageUrl} alt={item.title} className="w-full h-40 object-cover rounded-md mb-2" />
+            <img src={item.imageUrl} alt={item.title} className="w-full h-40 object-cover  rounded-md mb-2" />
             <h2 className="font-semibold">{item.title}</h2>
             <p className="text-sm text-gray-600">{item.rating}</p>
             <p className="text-sm text-gray-600">{item.location}</p>

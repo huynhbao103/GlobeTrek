@@ -27,7 +27,7 @@ const GoogleSignIn = () => {
             alert('Đăng nhập thành công!');
         } catch (error) {
             console.error('Đăng nhập thất bại:', error);
-            setError('Đăng nhập thất bại! Vui lòng thử lại.');
+            alert('Đăng nhập thất bại! Vui lòng thử lại.');
         }
     };
 
