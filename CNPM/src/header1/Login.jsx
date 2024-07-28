@@ -2,270 +2,274 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import GoogleSignIn from "./GoogleSignIn";
-import LoginFB from './LoginFB';
+import LoginFB from "./LoginFB";
+import ReCaptcha from "../ReCaptcha/ReCaptcha";
 
-const registeredUsers = [
-  { email: "Admin", password: "Admin",role:'admin' },
- 
-];
+const registeredUsers = [{ email: "Admin", password: "Admin", role: "admin" }];
 
-export default function Modal() {
-  const [showModal, setShowModal] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(null);
-  const [emailOrPhone, setEmailOrPhone] = useState("");
-  const [showPasswordInput, setShowPasswordInput] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
+export default function Modal({ onRecaptchaToken = () => {} }) {
+    const [showModal, setShowModal] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(null);
+    const [emailOrPhone, setEmailOrPhone] = useState("");
+    const [showPasswordInput, setShowPasswordInput] = useState(false);
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [recaptchaToken, setRecaptchaToken] = useState("");
+    const [submitEnabled, setSubmitEnabled] = useState(false);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
-    }
-  }, []);
+    useEffect(() => {
+        if (recaptchaToken) {
+            onRecaptchaToken(recaptchaToken);
+        }
+    }, [recaptchaToken, onRecaptchaToken]);
 
-  const closeModal = () => {
-    setShowModal(false);
-    setIsRegistered(null);
-    setEmailOrPhone("");
-    setShowPasswordInput(false);
-    setPassword("");
-    setConfirmPassword("");
-  };
+    useEffect(() => {
+        setSubmitEnabled(recaptchaToken.length > 0);
+    }, [recaptchaToken]);
 
-  const handleContinue = (e) => {
-    e.preventDefault();
-    const isUserRegistered = registeredUsers.some(
-      (user) => user.email === emailOrPhone
-    );
-    setIsRegistered(isUserRegistered);
-    setShowPasswordInput(true);
-  };
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            setIsLoggedIn(true);
+        }
+    }, []);
 
-  const handleChange = (e) => {
-    setEmailOrPhone(e.target.value);
-    setIsRegistered(null);
-    setShowPasswordInput(false);
-    setPassword("");
-    setConfirmPassword("");
-  };
+    const closeModal = () => {
+        setShowModal(false);
+        setIsRegistered(null);
+        setEmailOrPhone("");
+        setShowPasswordInput(false);
+        setPassword("");
+        setConfirmPassword("");
+    };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+    const handleContinue = (e) => {
+        e.preventDefault();
+        const isUserRegistered = registeredUsers.some(
+            (user) => user.email === emailOrPhone
+        );
+        setIsRegistered(isUserRegistered);
+        setShowPasswordInput(true);
+    };
 
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
+    const handleChange = (e) => {
+        setEmailOrPhone(e.target.value);
+        setIsRegistered(null);
+        setShowPasswordInput(false);
+        setPassword("");
+        setConfirmPassword("");
+    };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const user = registeredUsers.find((user) => user.email === emailOrPhone);
-    if (user && user.password === password) {
-      localStorage.setItem("user", JSON.stringify({ email: emailOrPhone }));
-      setUser({ email: emailOrPhone });
-      setIsLoggedIn(true);
-      alert("Đăng nhập thành công!");
-      
-      closeModal();
-      
-    } else {
-      alert("Email hoặc mật khẩu không hợp lệ!");
-    }
-  };
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Mật khẩu và xác nhận mật khẩu không khớp!");
-      return;
-    }
-    registeredUsers.push({ email: emailOrPhone, password });
-    localStorage.setItem("user", JSON.stringify({ email: emailOrPhone }));
-    setUser({ email: emailOrPhone });
-    setIsLoggedIn(true);
-    alert("Đăng ký thành công!");
-    closeModal();
-  };
+    const handleConfirmPasswordChange = (e) => {
+        setConfirmPassword(e.target.value);
+    };
 
-  const handleLogout = () => {
-    setShowLogoutModal(true);
-  };
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const user = registeredUsers.find((user) => user.email === emailOrPhone);
+        if (user && user.password === password) {
+            localStorage.setItem("user", JSON.stringify({ email: emailOrPhone }));
+            setUser({ email: emailOrPhone });
+            setIsLoggedIn(true);
+            alert("Đăng nhập thành công!");
+            closeModal();
+        } else {
+            alert("Email hoặc mật khẩu không hợp lệ!");
+        }
+    };
 
-  const confirmLogout = () => {
-    localStorage.removeItem("user");
-    window.location.reload();
-    setIsLoggedIn(false);
-    setUser(null);
-    setShowLogoutModal(false);
-  };
+    const handleRegister = (e) => {
+        e.preventDefault();
+        if (password !== confirmPassword) {
+            alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+            return;
+        }
+        registeredUsers.push({ email: emailOrPhone, password });
+        localStorage.setItem("user", JSON.stringify({ email: emailOrPhone }));
+        setUser({ email: emailOrPhone });
+        setIsLoggedIn(true);
+        alert("Đăng ký thành công!");
+        window.location.reload();
+        closeModal();
+    };
 
-  const cancelLogout = () => {
-    setShowLogoutModal(false);
-  };
+    const handleLogout = () => {
+        setShowLogoutModal(true);
+    };
 
-  return (
-    <>
-      <div className="flex items-center justify-center pr-2">
-        {!isLoggedIn ? (
-          <button
-            className="
-              bg-white text-black
-              md:px-6 md:py-2
-              px-4 py-1
-              rounded shadow hover:bg-slate-100
-              sm:text-sm font-medium
-              border border-[#4CA771]
-              md:text-base text-xs
-            "
-            type="button"
-            onClick={() => setShowModal(true)}
-          >
-            <FontAwesomeIcon icon={faUser} style={{ color: "#4CA771" }} /> Đăng Nhập / Đăng ký
-          </button>
-        ) : (
-          <div className="flex px-10 items-center">
-            <p className="text-black text-sm font-medium mr-4">
-              {user.name || user.email}
-            </p>
-         
-          </div>
-        )}
-      </div>
+    const confirmLogout = () => {
+        localStorage.removeItem("user");
+        window.location.reload();
+        setIsLoggedIn(false);
+        setUser(null);
+        setShowLogoutModal(false);
+    };
 
-      {showModal && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div
-            className="fixed inset-0 w-full h-full bg-black opacity-40"
-            onClick={closeModal}
-          />
-          <div className="flex items-center justify-center min-h-screen px-4 py-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md z-10 relative transition-transform transform">
-              <button
-                className="absolute top-2 right-2 bg-transparent text-gray-500 hover:text-black"
-                onClick={closeModal}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-              <h2 className="text-2xl font-bold mb-3">Đăng nhập / Đăng ký</h2>
-              <form
-                onSubmit={
-                  isRegistered === null
-                    ? handleContinue
-                    : isRegistered
-                    ? handleLogin
-                    : handleRegister
-                }
-              >
-                <p className="p-2 text-gray-700">Email/Số điện thoại di động</p>
-                <input
-                  type="text"
-                  placeholder="Ví dụ: +84901234567 hoặc user@example.com"
-                  className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
-                  value={emailOrPhone}
-                  onChange={handleChange}
-                />
-                {isRegistered !== null && (
-                  <p
-                    className={`mb-2 ${
-                      isRegistered ? "text-[#00875A]" : "text-[#FF5E1F]"
-                    }`}
-                  >
-                    {isRegistered
-                      ? "Email này đã được kết nối với tài khoản. Bạn có thể chỉ cần nhập mật khẩu của bạn dưới đây để đăng nhập."
-                      : "Email này chưa được đăng ký. Vui lòng nhập mật khẩu để đăng ký."}
-                  </p>
+    const cancelLogout = () => {
+        setShowLogoutModal(false);
+    };
+
+    const handleRecaptcha = (token) => {
+        setRecaptchaToken(token);
+    };
+
+    return (
+        <>
+            <div className="flex items-center justify-center pr-2">
+                {!isLoggedIn ? (
+                    <button
+                        className="
+                          bg-white text-black
+                          md:px-6 md:py-2
+                          px-4 py-1
+                          rounded shadow hover:bg-slate-100
+                          sm:text-sm font-medium
+                          border border-[#4CA771]
+                          md:text-base text-xs
+                        "
+                        type="button"
+                        onClick={() => setShowModal(true)}
+                    >
+                        <FontAwesomeIcon icon={faUser} style={{ color: "#4CA771" }} /> Đăng
+                        Nhập / Đăng ký
+                    </button>
+                ) : (
+                    <div className="flex px-10 items-center">
+                        <p className="text-black text-sm font-medium mr-4">
+                            {user.email}
+                        </p>
+                    </div>
                 )}
-                {showPasswordInput && (
-                  <>
-                    <input
-                      type="password"
-                      placeholder="Mật khẩu"
-                      className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
-                      value={password}
-                      onChange={handlePasswordChange}
-                    />
-                    {!isRegistered && (
-                      <input
-                        type="password"
-                        placeholder="Xác nhận mật khẩu"
-                        className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                        autoComplete="new-password"
-                      />
-                    )}
-                    {isRegistered && (
-                      <a
-                        href="#"
-                        className="text-blue-500 font-bold text-center flex justify-center text-base mb-4"
-                      >
-                        Quên mật khẩu?
-                      </a>
-                    )}
-                  </>
-                )}
-                <button
-                  type="submit"
-                  className={`w-full p-2 mb-4 ${
-                    isRegistered === null
-                      ? "bg-gray-100 text-slate-300 cursor-auto"
-                      : isRegistered
-                      ? "bg-blue-500 text-white"
-                      : "bg-[#FF5E1F] text-white"
-                  } rounded-md font-bold cursor-pointer`}
-                  disabled={!emailOrPhone}
-                >
-                  {isRegistered === null
-                    ? "Tiếp tục"
-                    : isRegistered
-                    ? "Đăng nhập"
-                    : "Đăng ký"}
-                </button>
-              </form>
-              <div className="bg-Login-register">
-                <div className="flex justify-center items-center mb-4">
-                  <hr className="border border-gray-300 w-20" />
-                  <div className="px-1 text-sm">hoặc đăng nhập/đăng ký với</div>
-                  <hr className="border border-gray-300 w-20" />
-                </div>
-                <div className="flex flex-col gap-2 mb-6">
-                  <GoogleSignIn />
-                  <LoginFB />
-                </div>
-                <div className="text-sm text-gray-600 text-center">
-                  Bằng cách đăng ký, bạn đồng ý với{" "}
-                  <a href="#" className="text-blue-500 font-bold">
-                    Điều khoản & Điều kiện
-                  </a>{" "}
-                  của chúng tôi và bạn đã đọc{" "}
-                  <a href="#" className="text-blue-500 font-bold">
-                    Chính Sách Quyền Riêng Tư
-                  </a>{" "}
-                  của chúng tôi.
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+
+            {showModal && (
+                <div className="fixed inset-0 z-50 overflow-y-auto">
+                    <div
+                        className="fixed inset-0 w-full h-full bg-black opacity-40"
+                        onClick={closeModal}
+                    />
+                    <div className="flex items-center justify-center min-h-screen px-4 py-8">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md z-10 relative transition-transform transform">
+                            <button
+                                className="absolute top-2 right-2 bg-transparent text-gray-500 hover:text-black"
+                                onClick={closeModal}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                            <h2 className="text-2xl font-bold mb-3">Đăng nhập / Đăng ký</h2>
+                            <form
+                                onSubmit={
+                                    isRegistered === null
+                                        ? handleContinue
+                                        : isRegistered
+                                        ? handleLogin
+                                        : handleRegister
+                                }
+                            >
+                                <p className="p-2 text-gray-700">Email/Số điện thoại di động</p>
+                                <input
+                                    type="text"
+                                    placeholder="Ví dụ: +84901234567 hoặc user@example.com"
+                                    className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
+                                    value={emailOrPhone}
+                                    onChange={handleChange}
+                                />
+                                {isRegistered !== null && (
+                                    <p
+                                        className={`mb-2 ${
+                                            isRegistered ? "text-[#00875A]" : "text-[#FF5E1F]"
+                                        }`}
+                                    >
+                                        {isRegistered
+                                            ? "Email này đã được kết nối với tài khoản. Bạn có thể chỉ cần nhập mật khẩu của bạn dưới đây để đăng nhập."
+                                            : "Email này chưa được đăng ký. Vui lòng nhập mật khẩu để đăng ký."}
+                                    </p>
+                                )}
+                                {showPasswordInput && (
+                                    <>
+                                        <input
+                                            type="password"
+                                            placeholder="Mật khẩu"
+                                            className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
+                                            value={password}
+                                            onChange={handlePasswordChange}
+                                        />
+                                        {!isRegistered && (
+                                            <input
+                                                type="password"
+                                                placeholder="Xác nhận mật khẩu"
+                                                className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
+                                                value={confirmPassword}
+                                                onChange={handleConfirmPasswordChange}
+                                            />
+                                        )}
+                                    </>
+                                )}
+                                <button
+                                    disabled={!submitEnabled || !emailOrPhone}
+                                    type="submit"
+                                    className={`w-full p-2 mb-4 ${
+                                        isRegistered === null
+                                            ? "bg-gray-100 text-slate-300 cursor-auto "
+                                            : isRegistered
+                                            ? "bg-blue-500 text-white"
+                                            : "bg-[#FF5E1F] text-white"
+                                    } rounded-md font-bold cursor-pointer`}
+                                >
+                                    {isRegistered === null
+                                        ? "Tiếp tục"
+                                        : isRegistered
+                                        ? "Đăng nhập"
+                                        : "Đăng ký"}
+                                </button>
+                            </form>
+                            <div className="flex flex-col gap-2 mb-6">
+                                <GoogleSignIn recaptchaToken={recaptchaToken} disabled={!submitEnabled} />
+                                <LoginFB />
+                            </div>
+                            <div className="flex mx-auto justify-center items-center">
+                                <ReCaptcha
+                                    sitekey="6Le4TBoqAAAAAPQljcyv-mNasoIjpAgJGkR6g534"
+                                    callback={handleRecaptcha}
+                                    size="normal"
+                                />
+                            </div>
+                            <div className="text-sm text-gray-600 text-center">
+                                Bằng cách đăng ký, bạn đồng ý với{" "}
+                                <a href="#" className="text-blue-500 font-bold">
+                                    Điều khoản & Điều kiện
+                                </a>{" "}
+                                của chúng tôi và bạn đã đọc{" "}
+                                <a href="#" className="text-blue-500 font-bold">
+                                    Chính Sách Quyền Riêng Tư
+                                </a>{" "}
+                                của chúng tôi.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
 }
