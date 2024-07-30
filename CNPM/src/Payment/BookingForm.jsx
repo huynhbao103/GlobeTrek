@@ -21,7 +21,7 @@ const BookingForm = () => {
   const [bookingData, setBookingData] = useState({
     adultCount: 1,
     childCount: 0,
-    prices: { adultPrice: 1000, childPrice: 200 } // Default values
+    prices: { adultPrice: 3000000, childPrice: 2000000 } // Default values
   });
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);

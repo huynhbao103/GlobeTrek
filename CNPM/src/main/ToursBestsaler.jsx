@@ -318,6 +318,7 @@ export default BestsalerTour;
 // import Skeleton from "react-loading-skeleton";
 // import "react-loading-skeleton/dist/skeleton.css"; // Import CSS for Skeleton
 // import { Link } from "react-router-dom";
+// import { mockLocations } from "./mockData"; // Import mock data
 
 // function BestsalerTour() {
 //   const [locations, setLocations] = useState([]);
@@ -362,27 +363,16 @@ export default BestsalerTour;
 //   };
 
 //   useEffect(() => {
-//     fetch("http://localhost:5000/api/tours")
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-//         return response.json();
-//       })
-//       .then((data) => {
-//         setLocations(data);
-//         setActiveLocation(data[0]);
-//         setLoading(false);
-//       })
-//       .catch((error) => {
-//         console.error("Error fetching data:", error);
-//         setError(error.message);
-//         setLoading(false);
-//       });
+//     // Simulate API call with mock data
+//     setTimeout(() => {
+//       setLocations(mockLocations);
+//       setActiveLocation(mockLocations[0]);
+//       setLoading(false);
+//     }, 1000); // Simulate loading time
 //   }, []);
 
 //   if (error) {
-//      alert('Có lỗi');
+//     alert('Có lỗi');
 //   }
 
 //   return (

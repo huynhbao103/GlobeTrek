@@ -12,7 +12,7 @@ const TourBooking = () => {
   const { selectedDate, setSelectedDate } = useDate();
   const [adultCount, setAdultCount] = useState(1); // Initialize with 1
   const [childCount, setChildCount] = useState(0); // Initialize with 0
-  const [prices, setPrices] = useState({ adultPrice: 1000, childPrice: 200 });
+  const [prices, setPrices] = useState({ adultPrice: 3000000, childPrice: 2000000 });
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true); // Add loading state
 

@@ -220,8 +220,9 @@ function BestsalerTour() {
     <div className="w-full flex justify-center pb-10">
       <div className="max-w-[1280px] w-[90%] sm:w-[68%]">
         <h1 className="font-bold text-2xl mb-4">
-          {loading ? <Skeleton width={200} height={30} /> : "Các Tour bán chạy"}
+          {loading ? <Skeleton width={200} height={30} /> : "Tour trọn gói xuất ngoại"}
         </h1>
+        <p>Khám phá tour 5N4D trọn gói dành cho gia đình!!</p>
 
         <div className="w-full mx-auto pt-10">
           <div className="flex overflow-x-auto space-x-4 mb-6 hide-scrollbar">

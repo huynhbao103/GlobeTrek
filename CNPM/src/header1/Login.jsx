@@ -19,6 +19,7 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [recaptchaToken, setRecaptchaToken] = useState("");
     const [submitEnabled, setSubmitEnabled] = useState(false);
+    const [inputError, setInputError] = useState("");
 
     useEffect(() => {
         if (recaptchaToken) {
@@ -40,30 +41,52 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
 
     const closeModal = () => {
         setShowModal(false);
+        resetForm();
+    };
+
+    const resetForm = () => {
         setIsRegistered(null);
         setEmailOrPhone("");
         setShowPasswordInput(false);
         setPassword("");
         setConfirmPassword("");
+        setInputError("");
     };
 
-    const handleContinue = (e) => {
-        e.preventDefault();
-        const isUserRegistered = registeredUsers.some(
-            (user) => user.email === emailOrPhone
-        );
-        setIsRegistered(isUserRegistered);
-        setShowPasswordInput(true);
+    const validateInput = (input) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Kiểm tra số điện thoại: bắt đầu bằng 0 và có 10 chữ số
+        const phonePattern = /^0\d{9}$/;
+        
+        if (emailPattern.test(input)) {
+            return "email";
+        } else if (phonePattern.test(input)) {
+            return "phone";
+        } else if (/^0/.test(input) && input.length > 10) {
+            return "phoneTooLong";
+        } else if (/^0/.test(input)) {
+            return "phoneInvalidStart";
+        } else {
+            return "invalid";
+        }
     };
-
+    
     const handleChange = (e) => {
-        setEmailOrPhone(e.target.value);
-        setIsRegistered(null);
-        setShowPasswordInput(false);
-        setPassword("");
-        setConfirmPassword("");
+        const value = e.target.value;
+        setEmailOrPhone(value);
+    
+        const validationResult = validateInput(value);
+        if (validationResult === "invalid") {
+            setInputError("Vui lòng nhập địa chỉ email hoặc số điện thoại hợp lệ.");
+        } else if (!validationResult === "phoneInvalidStart") {
+            setInputError("Số điện thoại phải bắt đầu bằng 0.");
+        } else if (validationResult === "phoneTooLong") {
+            setInputError("Số điện thoại không được vượt quá 10 chữ số.");
+        } else {
+            setInputError("");
+        }
     };
-
+    
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
@@ -72,8 +95,21 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
         setConfirmPassword(e.target.value);
     };
 
+    const handleContinue = (e) => {
+        e.preventDefault();
+        if (inputError) return; // Prevent form submission if there's an error
+
+        const isUserRegistered = registeredUsers.some(
+            (user) => user.email === emailOrPhone
+        );
+        setIsRegistered(isUserRegistered);
+        setShowPasswordInput(true);
+    };
+
     const handleLogin = (e) => {
         e.preventDefault();
+        if (inputError) return; // Prevent form submission if there's an error
+
         const user = registeredUsers.find((user) => user.email === emailOrPhone);
         if (user && user.password === password) {
             localStorage.setItem("user", JSON.stringify({ email: emailOrPhone }));
@@ -88,6 +124,8 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        if (inputError) return; // Prevent form submission if there's an error
+
         if (password !== confirmPassword) {
             alert("Mật khẩu và xác nhận mật khẩu không khớp!");
             return;
@@ -107,7 +145,6 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
 
     const confirmLogout = () => {
         localStorage.removeItem("user");
-        window.location.reload();
         setIsLoggedIn(false);
         setUser(null);
         setShowLogoutModal(false);
@@ -146,6 +183,12 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
                         <p className="text-black text-sm font-medium mr-4">
                             {user.email}
                         </p>
+                        <button
+                            className="text-blue-500 text-sm font-medium"
+                            onClick={handleLogout}
+                        >
+                            Đăng xuất
+                        </button>
                     </div>
                 )}
             </div>
@@ -191,11 +234,14 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
                                 <input
                                     type="text"
                                     placeholder="Ví dụ: +84901234567 hoặc user@example.com"
-                                    className="w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500"
+                                    className={`w-full p-2 mb-4 border border-gray-500 rounded-md focus:border-blue-500 ${inputError ? "border-red-500" : ""}`}
                                     value={emailOrPhone}
                                     onChange={handleChange}
                                 />
-                                {isRegistered !== null && (
+                                {inputError && (
+                                    <p className="text-red-500 mb-2">{inputError}</p>
+                                )}
+                                {isRegistered !== null && !inputError && (
                                     <p
                                         className={`mb-2 ${
                                             isRegistered ? "text-[#00875A]" : "text-[#FF5E1F]"
@@ -227,11 +273,11 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
                                     </>
                                 )}
                                 <button
-                                    disabled={!submitEnabled || !emailOrPhone}
+                                    disabled={!submitEnabled || !emailOrPhone || inputError}
                                     type="submit"
                                     className={`w-full p-2 mb-4 ${
                                         isRegistered === null
-                                            ? "bg-gray-100 text-slate-300 cursor-auto "
+                                            ? "bg-gray-100 text-slate-300 cursor-auto"
                                             : isRegistered
                                             ? "bg-blue-500 text-white"
                                             : "bg-[#FF5E1F] text-white"
@@ -266,6 +312,29 @@ export default function Modal({ onRecaptchaToken = () => {} }) {
                                 </a>{" "}
                                 của chúng tôi.
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showLogoutModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                        <h3 className="text-lg font-bold mb-4">Xác nhận Đăng xuất</h3>
+                        <p className="mb-4">Bạn có chắc chắn muốn đăng xuất không?</p>
+                        <div className="flex justify-end gap-4">
+                            <button
+                                className="bg-gray-300 text-black px-4 py-2 rounded"
+                                onClick={cancelLogout}
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                className="bg-red-500 text-white px-4 py-2 rounded"
+                                onClick={confirmLogout}
+                            >
+                                Đăng xuất
+                            </button>
                         </div>
                     </div>
                 </div>
